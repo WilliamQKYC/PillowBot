@@ -37,6 +37,10 @@ public class Intake {
         intakeMotor.set(FLUSH_VALUE);
     }
     
+    public void stop(){
+        intakeMotor.set(0.0);
+    }
+    
     public void raise(){
         leftPiston.retract();
         rightPiston.retract();

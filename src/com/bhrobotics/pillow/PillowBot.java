@@ -29,6 +29,7 @@ public class PillowBot extends IterativeRobot {
         left = new MotorModule(1,3,5);
         right = new MotorModule(2,4,6);
         drivestick = new Joystick(1);
+        
     }
 
     /**
