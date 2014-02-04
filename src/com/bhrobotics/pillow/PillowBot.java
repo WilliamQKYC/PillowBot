@@ -21,15 +21,16 @@ import edu.wpi.first.wpilibj.Joystick;
 public class PillowBot extends IterativeRobot {
     
     
-    private MotorModule left;
-    private MotorModule right;
-    private Joystick drivestick;
+    private Joystick driveStick;
+    private DriveTrain driveTrain;
+    private Intake intake;
+    private Catapult catapult;
     
     public void robotInit() {
-        left = new MotorModule(1,3,5);
-        right = new MotorModule(2,4,6);
-        drivestick = new Joystick(1);
-        
+        driveStick = new Joystick(1);
+        driveTrain = new DriveTrain(1,2,3,4,5,6,1,2,3,4,driveStick); //check encoder ports (and now apparently there are only 2 motors)
+        intake = new Intake(7,1,2,3,4,5,6); //check motor,solenoid, and encoder ports
+        catapult = new Catapult(8,5,6,7,8); //check motor, solenoid, and encoder ports
     }
 
     /**
@@ -43,6 +44,44 @@ public class PillowBot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        
+        //set drive style
+        if(driveStick.getRawButton(10)){
+            driveTrain.setChessyDrive();
+        } else if(driveStick.getRawButton(9)){
+            driveTrain.setOneStickDrive();
+        }
+        
+        //set turn style
+        if(driveStick.getRawButton(11)){
+            driveTrain.setAxisTurn();
+        } else if(driveStick.getRawButton(12)){
+            driveTrain.setTwistTurn();
+        }
+        
+        //intake motor
+        if(driveStick.getRawButton(1)){
+            intake.intake();
+        } else if(driveStick.getRawButton(6)){
+            intake.flush();
+        } else{
+            intake.stop();
+        }
+        
+        //intake position
+        if(driveStick.getRawButton(3)){
+            intake.raise();
+        } else if(driveStick.getRawButton(4)){
+            intake.lower();
+        }
+        
+        //catapult shooting
+        if(driveStick.getRawButton(2)){
+            catapult.shoot();
+        }
+        
+        //drive code
+        driveTrain.drive();
         
     }
     

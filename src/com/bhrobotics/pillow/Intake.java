@@ -19,7 +19,7 @@ public class Intake {
     private Piston rightPiston;
     private Encoder intakeEncoder;
     private static final double INTAKE_VALUE = 1.0;
-    private static final double FLUSH_VALUE = 1.0;
+    private static final double FLUSH_VALUE = -1.0;
     
     public Intake(int motorPort,int solenoidPortOne,int solenoidPortTwo,int solenoidPortThree,int solenoidPortFour,int encoderSlotOne,int encoderSlotTwo){
         this.intakeMotor = new Talon(1,motorPort);

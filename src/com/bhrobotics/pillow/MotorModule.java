@@ -33,4 +33,8 @@ public class MotorModule {
         two.set(speed);
         three.set(speed);
     }
+    
+    public void stop(){
+        setSpeed(0.0);
+    }
 }

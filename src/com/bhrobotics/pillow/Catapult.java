@@ -33,7 +33,7 @@ public class Catapult {
     }
     
     public void retract(){
-        shifter.retract();
+        shifter.extend();
         timer.schedule(new TimerTask() {
             public void run(){
                 if(winchEncoder.getDistance() > 0.0){
@@ -45,7 +45,7 @@ public class Catapult {
     }
             
     public void shoot(){
-        shifter.extend();
+        shifter.retract();
         timer.schedule(new TimerTask() {
             public void run(){
                 

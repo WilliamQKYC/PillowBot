@@ -4,6 +4,7 @@
  */
 package com.bhrobotics.pillow;
 
+import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -55,7 +56,11 @@ public class DriveTrain {
         double x;
         if(chessy){
             y = Math.sin(joystick.getDirectionRadians()) * joystick.getRawAxis(3);
-            x = Math.cos(joystick.getDirectionRadians()) * joystick.getRawAxis(3);
+            if(twisted){
+                x = Math.cos(MathUtils.atan(joystick.getRawAxis(2)/joystick.getRawAxis(6))) * joystick.getRawAxis(3);
+            } else{
+                x = Math.cos(joystick.getDirectionRadians()) * joystick.getRawAxis(3);
+            }
         } else{
             y = joystick.getRawAxis(2);
             if(twisted){
@@ -70,4 +75,8 @@ public class DriveTrain {
         right.setSpeed(y + x);
     }
     
+    public void stop(){
+        left.stop();
+        right.stop();
+    }
 }
