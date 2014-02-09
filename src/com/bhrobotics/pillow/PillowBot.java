@@ -29,8 +29,8 @@ public class PillowBot extends IterativeRobot {
     public void robotInit() {
         driveStick = new Joystick(1);
         driveTrain = new DriveTrain(1,2,3,4,1,2,3,4,driveStick); //check encoder ports (and now apparently there are only 2 motors)
-        intake = new Intake(7,1,2,3,4,5,6); //check motor,solenoid, and encoder ports
-        catapult = new Catapult(8,5,6,7,8); //check motor, solenoid, and encoder ports
+        intake = new Intake(5,1,2,5,6); //check motor, solenoid, and encoder ports
+        catapult = new Catapult(6,3,4,7,8); //check motor, solenoid, and encoder ports
     }
 
     /**

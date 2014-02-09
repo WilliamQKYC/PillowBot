@@ -26,9 +26,9 @@ public class DriveTrain {
     private static final double TURNING_SCALE = 1.0;
     
     public DriveTrain(int motorPortOne, int motorPortTwo, int motorPortThree, int motorPortFour, int encoderSlotOne, int encoderSlotTwo, int encoderSlotThree, int encoderSlotFour, Joystick joystick){
-        this.left = new MotorModule(motorPortOne,motorPortThree);
-        this.right = new MotorModule(motorPortTwo,motorPortFour);
-        this.leftEncoder = new Encoder(new DigitalInput(1,encoderSlotOne),new DigitalInput(1,encoderSlotOne));
+        this.left = new MotorModule(motorPortTwo,motorPortFour);
+        this.right = new MotorModule(motorPortOne,motorPortThree);
+        this.leftEncoder = new Encoder(new DigitalInput(1,encoderSlotOne),new DigitalInput(1,encoderSlotTwo));
         this.rightEncoder = new Encoder(new DigitalInput(1,encoderSlotThree),new DigitalInput(1,encoderSlotFour));
         this.joystick = joystick;
         twisted = true;

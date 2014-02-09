@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Talon;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import edu.wpi.first.wpilibj.Gyro;
+//import edu.wpi.first.wpilibj.Gyro;
 
 /**
  *
