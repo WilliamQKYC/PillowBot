@@ -16,4 +16,8 @@ import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
  */
 public class VisionTracker {
     AxisCamera visionCamera;
+    CriteriaCollection particleCriteria;      // the criteria for doing the particle filter operation
+
+    static public int rmin = 0, rmax = 90, gmin = 50, gmax = 255, bmin = 150, bmax = 255;
+     
 }

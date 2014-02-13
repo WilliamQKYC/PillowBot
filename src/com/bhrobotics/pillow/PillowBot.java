@@ -10,6 +10,8 @@ package com.bhrobotics.pillow;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +39,17 @@ public class PillowBot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+	Timer timer = new Timer(); 
+        
+        timer.schedule(new TimerTask() {
+            public void run() {
+                driveTrain.drive();
 
+            }
+        }, 1000);
+        
+        catapult.shoot();
+        
     }
 
     /**
