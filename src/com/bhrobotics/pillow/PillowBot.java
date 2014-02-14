@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import java.util.Timer;
 import java.util.TimerTask;
+import edu.wpi.first.wpilibj.Relay;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,29 +29,29 @@ public class PillowBot extends IterativeRobot {
     private DriveTrain driveTrain;
     private Intake intake;
     private Catapult catapult;
+    private Relay compressor;
     
     public void robotInit() {
         driveStick = new Joystick(1);
         driveTrain = new DriveTrain(1,2,3,4,1,2,3,4,driveStick); //check encoder ports (and now apparently there are only 2 motors)
         intake = new Intake(5,1,2,5,6); //check motor, solenoid, and encoder ports
         catapult = new Catapult(6,3,4,7,8); //check motor, solenoid, and encoder ports
+        compressor = new Relay(1, 8);
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-	Timer timer = new Timer(); 
-        
+	Timer timer = new Timer();
+        driveTrain.autoDrive(0.75, 0.75);
+
         timer.schedule(new TimerTask() {
             public void run() {
-                driveTrain.drive();
-
-            }
+                driveTrain.stop();
+                catapult.shoot();
+            }           
         }, 1000);
-        
-        catapult.shoot();
-        
     }
 
     /**
