@@ -23,7 +23,7 @@ public class Intake {
     public Intake(int motorPortFive,int solenoidPortOne,int solenoidPortTwo,int encoderSlotOne,int encoderSlotTwo){
         this.intakeMotor = new Talon(1,motorPortFive);
         this.intakePiston = new Piston(solenoidPortOne,solenoidPortTwo);
-        this.intakeEncoder = new Encoder(new DigitalInput(1,encoderSlotOne),new DigitalInput(1,encoderSlotTwo));
+        //this.intakeEncoder = new Encoder(new DigitalInput(1,encoderSlotOne),new DigitalInput(1,encoderSlotTwo));
         raise();
     }
     // inward

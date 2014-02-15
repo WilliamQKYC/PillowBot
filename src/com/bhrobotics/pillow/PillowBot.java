@@ -65,7 +65,7 @@ public class PillowBot extends IterativeRobot {
       //  camera = AxisCamera.getInstance();
       //  cc = new CriteriaCollection();      // create the criteria for the particle filter
        // driveCam = new VisionTracker();
-        valve = new DigitalInput(1,3);
+        valve = new DigitalInput(1,COMPRESSOR_GAUGE);
     }
 
     public void robotMaintenance() {
