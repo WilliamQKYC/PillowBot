@@ -26,11 +26,11 @@ public class Intake {
         this.intakeEncoder = new Encoder(new DigitalInput(1,encoderSlotOne),new DigitalInput(1,encoderSlotTwo));
         raise();
     }
-    
+    // inward
     public void intake(){
         intakeMotor.set(INTAKE_VALUE);
     }
-    
+    // reverse
     public void flush(){
         intakeMotor.set(FLUSH_VALUE);
     }
@@ -38,11 +38,11 @@ public class Intake {
     public void stop(){
         intakeMotor.set(0.0);
     }
-    
+    // up
     public void raise(){
         intakePiston.retract();
     }
-    
+    // down
     public void lower(){
         intakePiston.extend();
     }

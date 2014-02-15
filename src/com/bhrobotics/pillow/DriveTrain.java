@@ -24,6 +24,9 @@ public class DriveTrain {
     private boolean chessy;
     private static final double DRIVING_SCALE = 1.0;
     private static final double TURNING_SCALE = 1.0;
+    private static final double LEFT_SPEED_TRIM = 1.0;
+    private static final double RIGHT_SPEED_TRIM = 1.0;
+    private boolean isReversed;
     
     public DriveTrain(int motorPortOne, int motorPortTwo, int motorPortThree, int motorPortFour, int encoderSlotOne, int encoderSlotTwo, int encoderSlotThree, int encoderSlotFour, Joystick joystick){
         this.left = new MotorModule(motorPortTwo,motorPortFour);
@@ -33,7 +36,17 @@ public class DriveTrain {
         this.joystick = joystick;
         twisted = true;
         chessy = false;
+        isReversed = false;
     }
+
+    public boolean isReversed() {
+        return isReversed;
+    }
+
+    public void setIsReversed(boolean isReversed) {
+        this.isReversed = isReversed;
+    }
+    
     
     public void setTwistTurn(){
         twisted = true;
@@ -52,8 +65,10 @@ public class DriveTrain {
     }
     
     public void drive(){
+        double reverseFactor = isReversed? -1.0 : 1.0;
         double y;
         double x;
+        
         if(chessy){
             y = Math.sin(joystick.getDirectionRadians()) * joystick.getRawAxis(3);
             if(twisted){
@@ -71,8 +86,13 @@ public class DriveTrain {
         }
         y *= DRIVING_SCALE;
         x *= TURNING_SCALE;
-        left.setSpeed(-y + x);
-        right.setSpeed(y + x);
+        left.setSpeed(LEFT_SPEED_TRIM*reverseFactor*(-y + x));
+        right.setSpeed(RIGHT_SPEED_TRIM*reverseFactor*(y + x));
+    }
+    
+    public void autoDrive(double leftSpeed, double rightSpeed){
+        left.setSpeed(leftSpeed);
+        right.setSpeed(rightSpeed);
     }
     
     public void stop(){

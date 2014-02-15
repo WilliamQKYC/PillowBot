@@ -53,6 +53,9 @@ public class VisionTracker implements Runnable {
     
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
+
+    public void run() {
+    }
     
     public class Scores {
         double rectangularity;
