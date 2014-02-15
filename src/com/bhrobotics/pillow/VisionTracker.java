@@ -1,8 +1,10 @@
-import edu.wpi.first.wpilibj.Timer;
+package com.bhrobotics.pillow;
+
 import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.*;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
-
+        
 /**
  * Sample program to use NIVision to find rectangles in the scene that are illuminated
  * by a LED ring light (similar to the model from FIRSTChoice). The camera sensitivity
@@ -23,7 +25,7 @@ import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
  * images.
  */
 
-public class VisionTracker {
+public class VisionTracker implements Runnable {
 
     //Camera constants used for distance calculation
     final int Y_IMAGE_RES = 480;		//X Image resolution in pixels, should be 120, 240 or 480
@@ -33,7 +35,7 @@ public class VisionTracker {
     final double PI = 3.141592653;
 
     //Score limits used for target identification
-    final int  RECTANGULARITY_LIMIT = 40;
+    final int RECTANGULARITY_LIMIT = 40;
     final int ASPECT_RATIO_LIMIT = 55;
 
     //Score limits used for hot target determination
@@ -47,6 +49,8 @@ public class VisionTracker {
     //Maximum number of particles to process
     final int MAX_PARTICLES = 8;
 
+    boolean hot;
+    
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
     
@@ -68,7 +72,7 @@ public class VisionTracker {
     };
     
     public void robotInit() {
-        //camera = AxisCamera.getInstance();  // get an instance of the camera
+        camera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);
     }
@@ -79,7 +83,7 @@ public class VisionTracker {
 	int horizontalTargets[] = new int[MAX_PARTICLES];
 	int verticalTargetCount, horizontalTargetCount;
         
-     //   while (isAutonomous() && isEnabled()) {
+        while (true) {
             try {
                 /**
                  * Do the image capture with the camera and apply the algorithm described above. This
@@ -87,9 +91,9 @@ public class VisionTracker {
                  * level directory in the flash memory on the cRIO. The file name in this case is "testImage.jpg"
                  * 
                  */
-                //ColorImage image = camera.getImage();     // comment if using stored images
-                ColorImage image;                           // next 2 lines read image from flash on cRIO
-                image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
+                ColorImage image = camera.getImage();     // comment if using stored images
+                //ColorImage image;                           // next 2 lines read image from flash on cRIO
+                //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
                 BinaryImage thresholdImage = image.thresholdHSV(105, 137, 230, 255, 133, 183);   // keep only green objects
                 //thresholdImage.write("/threshold.bmp");
                 BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
@@ -165,7 +169,7 @@ public class VisionTracker {
                                     }
                                 }
                                 //Determine if the best target is a Hot target
-                                target.Hot = hotOrNot(target);
+                                target.Hot = this.hot = hotOrNot(target);
                             }
 
                             if(verticalTargetCount > 0)
@@ -195,22 +199,26 @@ public class VisionTracker {
                 thresholdImage.free();
                 image.free();
                 
-//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+  //          } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
 //                ex.printStackTrace();
             } catch (NIVisionException ex) {
                 ex.printStackTrace();
-            }
-       // }
+            } catch (AxisCameraException ex) {
+                ex.printStackTrace();
+            } 
+        }
     }
 
     /**
      * This function is called once each time the robot enters operator control.
      */
+    
+    /*
     public void operatorControl() {
-        while (isOperatorControl() && isEnabled()) {
-            Timer.delay(1);
-        }
+    while (isOperatorControl() && isEnabled()) {
+    Timer.delay(1);
     }
+    }*/
     
     /**
      * Computes the estimated distance to a target using the height of the particle in the image. For more information and graphics
