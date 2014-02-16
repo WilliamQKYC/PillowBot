@@ -70,9 +70,11 @@ public class PillowBot extends IterativeRobot {
 
     public void robotMaintenance() {
         // PSI set to factory value automatically
-        if (!valve.get()) {
+        if (valve.get()) {
+            System.out.println("valve off");
             compressor.set(Relay.Value.kForward);
         } else {
+            System.out.println("valve on");
         compressor.set(Relay.Value.kOff);
         }
     }
@@ -125,14 +127,18 @@ public class PillowBot extends IterativeRobot {
         //winch winding
         if(secondStick.getRawButton(WINCH_SPOOL)){
             catapult.winchSpool();
+             System.out.println("winchspool");
         } else {
             catapult.winchStop();
+                         System.out.println("not winch");
+
         }
 
         
         //intake motor
         if(secondStick.getRawButton(INTAKE_MOTOR_FORWARD) && !secondStick.getRawButton(INTAKE_MOTOR_BACKWARD)){
             intake.intake();
+
         } else if(secondStick.getRawButton(INTAKE_MOTOR_BACKWARD) && !secondStick.getRawButton(INTAKE_MOTOR_FORWARD)){
             intake.flush();
         } else{
@@ -142,15 +148,23 @@ public class PillowBot extends IterativeRobot {
         //intake position
         if(secondStick.getRawButton(INTAKE_UP) && !secondStick.getRawButton(INTAKE_DOWN)){
             intake.raise();
+                         System.out.println("intake up");
+
         } else if(secondStick.getRawButton(INTAKE_DOWN) && !secondStick.getRawButton(INTAKE_UP)){
             intake.lower();
+                         System.out.println("intake down");
+
         }
                 
         //catapult shooting
         if(secondStick.getRawButton(WINCH_CLUTCH_ENGAGE) && !secondStick.getRawButton(WINCH_CLUTCH_DISENGAGE)){
             catapult.clutchOpen();
+                         System.out.println("clutch open");
+
         } else if(secondStick.getRawButton(WINCH_CLUTCH_DISENGAGE) && !secondStick.getRawButton(WINCH_CLUTCH_ENGAGE)){
            catapult.clutchClose();
+                        System.out.println("clutch close");
+
         }
         
         //drive code

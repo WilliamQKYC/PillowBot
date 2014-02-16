@@ -86,7 +86,8 @@ public class Catapult {
 //        }
 //        winchMotor.set(0.0);
 //      
-        if(!isRetracted())
+        //if(!isRetracted())
+        if (true)
             winchMotor.set(INTAKE_VALUE);
         else
             winchMotor.set(0);

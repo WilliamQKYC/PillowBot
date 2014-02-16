@@ -34,6 +34,7 @@ public class DriveTrain {
         //this.leftEncoder = new Encoder(new DigitalInput(1,encoderSlotOne),new DigitalInput(1,encoderSlotTwo));
         //this.rightEncoder = new Encoder(new DigitalInput(1,encoderSlotThree),new DigitalInput(1,encoderSlotFour));
         this.joystick = joystick;
+        // changed booleans
         twisted = true;
         chessy = false;
         isReversed = false;
@@ -83,11 +84,18 @@ public class DriveTrain {
             } else{
                 x = joystick.getRawAxis(1);
             }
-        }
+      }
+        
         y *= DRIVING_SCALE;
         x *= TURNING_SCALE;
-        left.setSpeed(LEFT_SPEED_TRIM*reverseFactor*(-y + x));
+        left.setSpeed(LEFT_SPEED_TRIM*reverseFactor*(-y - x));
         right.setSpeed(RIGHT_SPEED_TRIM*reverseFactor*(y + x));
+//        System.out.print("x=" + x);
+//        System.out.print(" y=" + y);
+//        System.out.print(" 2=" + joystick.getRawAxis(2));
+//        System.out.print(" 3=" + joystick.getRawAxis(3));
+//        System.out.print(" 6=" + joystick.getRawAxis(6));
+//        System.out.println("");
     }
     
     public void autoDrive(double leftSpeed, double rightSpeed){

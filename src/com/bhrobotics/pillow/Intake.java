@@ -40,10 +40,13 @@ public class Intake {
     }
     // up
     public void raise(){
-        intakePiston.retract();
+            intakePiston.retract();
+        System.out.println("raise");
     }
     // down
     public void lower(){
         intakePiston.extend();
+                System.out.println("lower");
+
     }
 }
