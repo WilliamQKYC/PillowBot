@@ -33,6 +33,7 @@ public class Catapult {
     public Catapult(int winchMotorPort, int solenoidPortOne, int solenoidPortTwo, int encoderSlotOne, int encoderSlotTwo, int limitSwitchPortOne, int limitSwitchPortTwo){
         this.winchMotor = new Talon(1,winchMotorPort);
         this.shifter = new Piston(solenoidPortOne,solenoidPortTwo);
+        // Check  if the switches changes values when you press them.  change the module or port if not
         this.limitSwitchOne = new DigitalInput(1,limitSwitchPortOne);
         this.limitSwitchTwo = new DigitalInput(1,limitSwitchPortTwo);
 
@@ -63,6 +64,13 @@ public class Catapult {
     }    
     
     public boolean isRetracted() {
+        // checking the output of the two digital switch
+        // test by directly activiating the switches by hand
+        System.out.print("limit switch one: ");
+        System.out.print(limitSwitchOne.get());
+        System.out.print("limit switch Two: ");
+        System.out.print(limitSwitchTwo.get());
+        // We may have to not (!) the two things below
         return limitSwitchOne.get() || limitSwitchTwo.get();
     }
     
@@ -87,6 +95,7 @@ public class Catapult {
 //        winchMotor.set(0.0);
 //      
         //if(!isRetracted())
+        isRetracted();
         if (true)
             winchMotor.set(INTAKE_VALUE);
         else
